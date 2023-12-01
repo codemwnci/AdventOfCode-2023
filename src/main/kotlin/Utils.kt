@@ -24,6 +24,8 @@ fun <T> List<T>.combinations(size: Int): List<List<T>> = when (size) {
 
 fun main(args: Array<String>) {
 
+    println("Generating Today's Kotlin File and downloading Input Data")
+
     val cookie = args.getOrNull(0)
 
     val template = File("src/main/kotlin/Template.kt").readText()
@@ -31,16 +33,21 @@ fun main(args: Array<String>) {
     val todaysCode = File("src/main/kotlin/Day${day}.kt")
     val todaysInput = File("inputs/day${day}.txt")
 
-    println("Day: $day, Cookie: $cookie")
-
     // create file if it doesn't exist
     if (todaysCode.createNewFile()) {
         todaysCode.writeText(template.replace("XX", day))
+        println("Kotlin File Generated --> ${todaysCode.canonicalPath}")
     }
 
     if (cookie != null && todaysInput.createNewFile()) {
         val http = java.net.URL("https://adventofcode.com/2023/day/$day/input").openConnection()
         http.addRequestProperty("Cookie", "session=$cookie")
-        File("inputs/day${day}.txt").writeText(InputStreamReader(http.getInputStream()).readText())
+        todaysInput.writeText(InputStreamReader(http.getInputStream()).readText())
+        println("Puzzle Input Downloaded --> ${todaysInput.canonicalPath}")
+    }
+    else {
+        if (cookie == null) {
+            println("Puzzle input NOT downloaded - no Cookie present")
+        }
     }
 }
