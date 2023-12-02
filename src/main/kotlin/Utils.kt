@@ -40,7 +40,7 @@ fun main(args: Array<String>) {
     }
 
     if (cookie != null && todaysInput.createNewFile()) {
-        val http = java.net.URL("https://adventofcode.com/2023/day/$day/input").openConnection()
+        val http = java.net.URL("https://adventofcode.com/2023/day/${LocalDate.now().dayOfMonth}/input").openConnection()
         http.addRequestProperty("Cookie", "session=$cookie")
         todaysInput.writeText(InputStreamReader(http.getInputStream()).readText())
         println("Puzzle Input Downloaded --> ${todaysInput.canonicalPath}")
