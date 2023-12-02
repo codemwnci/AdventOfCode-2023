@@ -18,7 +18,7 @@ class Day02 {
             var b=0
 
             cubes.split(", ").forEach { cube ->
-                val num = cube.takeWhile { c -> !c.isWhitespace() }.toInt()
+                val num = cube.substringBefore(" ").toInt()
                 if (cube.endsWith("blue")) b+=num
                 else if (cube.endsWith("green")) g+=num
                 else if (cube.endsWith("red")) r+=num
