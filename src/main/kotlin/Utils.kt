@@ -21,6 +21,7 @@ fun <T> List<T>.combinations(size: Int): List<List<T>> = when (size) {
     else -> flatMapIndexed { idx, element -> drop(idx + 1).combinations(size - 1).map { listOf(element) + it } }
 }
 
+fun Any.printAnswer() = println("Answer: ${this}")
 
 fun main(args: Array<String>) {
 
