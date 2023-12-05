@@ -10,9 +10,9 @@ class Day05 {
     data class RatioRange(val source: LongRange, val target: LongRange, val step: Long)
 
     private val file = File("inputs/day05.txt")
-    val lines = file.readLines().split { it.isBlank() }
-    val seeds = lines[0][0].substringAfter(": ").split(" ").map { it.toLong() }
-    val ratios = lines.drop(1).map {
+    private val lines = file.readLines().split { it.isBlank() }
+    private val seeds = lines[0][0].substringAfter(": ").split(" ").map { it.toLong() }
+    private val ratios = lines.drop(1).map {
         it.drop(1).map {
             val (target, source, rangeSize) = it.split(" ").map { it.toLong() }
             RatioRange(source until source+rangeSize, target until target+rangeSize, target-source)
