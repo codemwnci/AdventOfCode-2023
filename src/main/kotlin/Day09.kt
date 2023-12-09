@@ -11,24 +11,22 @@ class Day09 {
     fun puzzle1() {
         fun nextInSeq(ints: List<Int>) :Int {
             val diffs = ints.zipWithNext { a, b -> b-a }
-            return if (diffs.all { it == 0 }) ints.last() + diffs.last() else ints.last() + nextInSeq(diffs)
+            return if (diffs.all { it == 0 }) ints.last() else ints.last() + nextInSeq(diffs)
         }
 
         file.readLines().sumOf {
-            val history = it.split(" ").map { num -> num.toInt() }
-            nextInSeq(history)
+            nextInSeq( it.split(" ").map { num -> num.toInt() } )
         }.printAnswer()
     }
 
     fun puzzle2() {
         fun nextInSeqLeft(ints: List<Int>) :Int {
             val diffs = ints.zipWithNext { a, b -> b-a }
-            return if (diffs.all { it == 0 }) ints.first() - diffs.first() else ints.first() - nextInSeqLeft(diffs)
+            return if (diffs.all { it == 0 }) ints.first() else ints.first() - nextInSeqLeft(diffs)
         }
 
         file.readLines().sumOf {
-            val history = it.split(" ").map { num -> num.toInt() }
-            nextInSeqLeft(history)
+            nextInSeqLeft(it.split(" ").map { num -> num.toInt() })
         }.printAnswer()
     }
 }
