@@ -13,7 +13,7 @@ class Day10 {
         operator fun plus(other: Point) = Point(x + other.x, y + other.y)
         fun neighbours(boundary: Point) = listOf(Point(x+1, y), Point(x-1, y), Point(x, y+1), Point(x, y-1)).filter { it.x >= 0 && it.x <= boundary.x && it.y >= 0 && it.y <= boundary.y }
         fun getAdjacentSides() = listOf(Point(x, y - 1), Point(x - 1, y), Point(x + 1, y), Point(x, y + 1))
-        fun getAdjacent() = (-1 .. 1).map { xx -> (-1 .. 1).map { yy ->  Point(x+xx, y+yy) } }.flatten().filterNot { it == this }
+        fun getAdjacent() = (-1 .. 1).map { xx -> (-1 .. 1).map { yy ->  Point(x+xx, y+yy) } }.flatten().filter { it != this }
     }
     private val UP = Point(0, -1)
     private val DOWN = Point(0, 1)
