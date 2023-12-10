@@ -11,7 +11,6 @@ class Day10 {
     data class Pipe(val pos:Point, val type:Char)
     data class Point(val x:Int, val y:Int) {
         operator fun plus(other: Point) = Point(x + other.x, y + other.y)
-        fun neighbours(boundary: Point) = listOf(Point(x+1, y), Point(x-1, y), Point(x, y+1), Point(x, y-1)).filter { it.x >= 0 && it.x <= boundary.x && it.y >= 0 && it.y <= boundary.y }
         fun getAdjacentSides() = listOf(Point(x, y - 1), Point(x - 1, y), Point(x + 1, y), Point(x, y + 1))
         fun getAdjacent() = (-1 .. 1).map { xx -> (-1 .. 1).map { yy ->  Point(x+xx, y+yy) } }.flatten().filter { it != this }
     }
