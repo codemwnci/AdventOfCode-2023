@@ -8,7 +8,6 @@ fun main() {
 class Day14 {
     private val file = File("inputs/day14.txt")
 
-
     fun puzzle1() {
         val grid = file.readLines().map { it.toMutableList() }
         tiltToTop(grid)
@@ -22,7 +21,6 @@ class Day14 {
         val gridHistory = HashMap<String, Int>()
         val target = 1_000_000_000
         var curr = 0
-
 
         while (curr < target) {
             curr++
@@ -48,7 +46,6 @@ class Day14 {
         var hasMoved = true
         while (hasMoved) {
             hasMoved = false
-
             g.zipWithNext { row1, row2 ->
                 row1.forEachIndexed { index, c ->
                     if (c == '.' && row2[index] == 'O') {
