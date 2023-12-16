@@ -29,7 +29,7 @@ class Day16 {
         val startPosList = mutableListOf<Pair<Point, Dir>>()
         grid.indices.forEach {
             startPosList.add(Point(0, it) to Dir.E)
-            startPosList.add(Point(grid[0].size-1, it) to Dir.E)
+            startPosList.add(Point(grid[0].size-1, it) to Dir.W)
         }
         grid[0].indices.forEach {
             startPosList.add(Point(it, 0) to Dir.S)
