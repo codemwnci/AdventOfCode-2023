@@ -15,7 +15,6 @@ class Day19 {
     data class Workflow(val name:String, val rules: List<Rule>)
 
     private val inp:List<List<String>> = file.readLines().split { it.isBlank() }
-
     private val ratings = inp[1].map {
         it.drop(1).dropLast(1).split(",").map {
             it.split("=").let { category -> category[0].first() to category[1].toInt() }
