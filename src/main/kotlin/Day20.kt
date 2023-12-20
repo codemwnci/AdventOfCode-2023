@@ -31,8 +31,6 @@ class Day20 {
         }
     }.associateBy { it.name }
 
-
-
     fun puzzle1() { solve(false) }
     fun puzzle2() { solve(true) }
 
