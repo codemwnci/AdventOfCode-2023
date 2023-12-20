@@ -23,6 +23,16 @@ fun <T> List<T>.combinations(size: Int): List<List<T>> = when (size) {
 
 fun Any.printAnswer() = println("Answer: ${this}")
 
+fun lcm(values: Collection<Number>) = values.fold(1L) { acc, i -> lcm(acc, i.toLong()) }
+private fun lcm(a:Long, b:Long): Long {
+    val larger = if (a > b) a else b
+    var lcm = larger
+    while (!(lcm % a == 0L && lcm % b == 0L)) {
+        lcm += larger
+    }
+    return lcm
+}
+
 fun main(args: Array<String>) {
 
     println("Generating Today's Kotlin File and downloading Input Data")
