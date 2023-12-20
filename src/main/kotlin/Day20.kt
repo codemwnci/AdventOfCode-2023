@@ -31,6 +31,13 @@ class Day20 {
         }
     }.associateBy { it.name }
 
+    // Updated after submission, so that the source of RX isn't hard coded, this should allow this solution to work
+    // for any input. Walks the graph backwards from RX until it finds more than one source module
+    fun findRXFeed(name: String = "rx"):String = modules.values.filter { it.dest.contains(name) }.let {
+        if (it.size == 1) findRXFeed(it.first().name)
+        else name
+    }
+
     fun puzzle1() { solve(false) }
     fun puzzle2() { solve(true) }
 
@@ -39,7 +46,8 @@ class Day20 {
         var low = 0
         var high = 0
         val cycleLengths = mutableMapOf<String, Int>()
-        val numCycles = modules.values.count { it.dest.contains("lg") }
+        val rxFeed = findRXFeed()
+        val numCycles = modules.values.count { it.dest.contains(rxFeed) }
 
         repeat(if (part2) Int.MAX_VALUE else 1000) { buttonPresses ->
             val queue = ArrayDeque<ToProcess>()
@@ -64,10 +72,10 @@ class Day20 {
                             module.dest.forEach { queue.add(ToProcess(lookupModule(it), out, module.name)) }
                         }
 
-                        // In my input, as with others, rx is fed by a single Conjunction (lg), which is fed by 4 other Conjunctions.
-                        // Need to find the LCM of each sub-graph's (the 4 conjunctions) cycle length to calculate when
-                        // rx will output
-                        if (part2 && module.name=="lg" && pulse == 1 && cycleLengths[sender] == null) {
+                        // Uses rxFeed (which walks the graph to find where multiple modules feed one or a chain of single modules)
+                        // From this module, we can find the first time the individual module was sent a ON pulse (cycle length)
+                        // Once we have all the modules that feed the RX chain, we can use LCM on each cycle length
+                        if (part2 && module.name==rxFeed && pulse == 1 && cycleLengths[sender] == null) {
                             cycleLengths[sender] = buttonPresses+1
                             if (cycleLengths.size == numCycles) {
                                 lcm(cycleLengths.values).printAnswer()
