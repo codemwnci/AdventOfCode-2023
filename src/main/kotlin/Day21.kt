@@ -32,7 +32,7 @@ class Day21 {
         count.printAnswer()
     }
 
-    // Part 1 was easy. Part 2 was a struggle (brute for was not going to cut it, unfortunately.
+    // Part 1 was easy. Part 2 was a struggle (brute force was not going to cut it, unfortunately).
     // I ended up getting a lot of help from Jonathan Paulson's solution. His YouTube video explainer was very useful.
     // https://www.youtube.com/watch?v=C2dmxCGGH1s
     // https://github.com/jonathanpaulson/AdventOfCode/blob/master/2023/21.py
