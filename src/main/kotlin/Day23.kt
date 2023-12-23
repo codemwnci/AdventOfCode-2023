@@ -50,7 +50,7 @@ class Day23 {
     }
 
     // tried a brute force whilst writing the edge contraction optimisation approach
-    // didn't look like brute force didn't complete before the optimisation was ready, so gave up and used
+    // didn't look like brute force would complete before the optimisation was ready, so gave up and used
     // this instead.
     fun puzzle2() {
         val grid = file.readLines().map { it.toList() }
