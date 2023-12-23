@@ -49,7 +49,6 @@ class Day23 {
         validPaths.maxOf { it.size - 1 }.printAnswer()
     }
 
-
     // tried a brute force whilst writing the edge contraction optimisation approach
     // didn't look like brute force didn't complete before the optimisation was ready, so gave up and used
     // this instead.
