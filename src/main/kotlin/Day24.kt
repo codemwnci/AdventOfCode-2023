@@ -46,7 +46,7 @@ class Day24 {
     // people suggesting Z3 was the only way to solve the problem.
     // After solving, I wanted to find a Kotlin (JVM) way to solve the problem, and found a Java binding for Z3.
     // It was fiddly to set up (and the Java binding isn't as nice as the python approach), but for reference
-    // Maven dependency I used was: io.github.p.solvers.z32
+    // Maven dependency I used was: io.github.p-org.solvers:z3:4.8.14-v5
     // Also need to download Z3 from https://github.com/Z3Prover/z3/releases/download/z3-4.12.4/z3-4.12.4-x64-win.zip
     // and make sure the bin directory is on the classpath -Djava.library.path="pathto\lib\z3-4.12.4-x64-win\bin\"
     fun puzzle2() {
