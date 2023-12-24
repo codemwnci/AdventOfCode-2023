@@ -62,7 +62,7 @@ class Day24 {
         val solver = ctx.mkSolver()
 
         val time = measureTime {
-            // int version - Int version Took 14m2s
+            // int version - Int version Took (without Proof = 4s / with Proof = 14m2s)
             val (x, y, z, vx, vy, vz) = listOf("x","y","z","vx","vy","vz").map { ctx.mkIntConst(it) }
 
             //hail.forEachIndexed { idx, h ->
