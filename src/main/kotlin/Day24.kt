@@ -6,8 +6,10 @@ import com.microsoft.z3.*
 fun main() {
     Day24().puzzle1()
     Day24().puzzle2()
+    Day24().puzzle2v2()
 }
 
+@OptIn(ExperimentalTime::class)
 class Day24 {
     private val file = File("inputs/day24.txt")
     data class Point3D(val x:Double, val y:Double, val z:Double)
@@ -41,7 +43,6 @@ class Day24 {
     }
 
 
-    @OptIn(ExperimentalTime::class)
     // Initially completed this using Python, because I hadn't used Z3 before, and Reddit was full of python
     // people suggesting Z3 was the only way to solve the problem.
     // After solving, I wanted to find a Kotlin (JVM) way to solve the problem, and found a Java binding for Z3.
@@ -57,15 +58,12 @@ class Day24 {
             }
         }
 
-        val ctx = Context(HashMap<String, String>().also {
-            it["proof"] = "true"
-        })
+        val ctx = Context() // if using proof = true, takes a significantly longer time
         val solver = ctx.mkSolver()
 
         val time = measureTime {
-            // int version - Took 14m2s
-            val (x, y, z) = listOf("x", "y", "z").map { ctx.mkIntConst(it) }
-            val (vx, vy, vz) = listOf("vx", "vy", "vz").map { ctx.mkIntConst(it) }
+            // int version - Int version Took 14m2s
+            val (x, y, z, vx, vy, vz) = listOf("x","y","z","vx","vy","vz").map { ctx.mkIntConst(it) }
 
             //hail.forEachIndexed { idx, h ->
             (0..2).forEach { idx ->                 // possible to get answers from 3 points, rather than calculating for all
@@ -80,20 +78,33 @@ class Day24 {
             if (solver.check() == Status.SATISFIABLE) {  // check generates the model and confirms if it is satisfiable or not
                 solver.model.eval(ctx.mkAdd(x, ctx.mkAdd(y, z)), false).printAnswer()
             }
+        }
 
-            // bitvec version -- Took 11m41s (not meaningfully faster)
-//            val (x, y, z) = listOf("x", "y", "z").map { ctx.mkBVConst(it, 64) }
-//            val (vx, vy, vz) = listOf("vx", "vy", "vz").map { ctx.mkBVConst(it, 64) }
-//            (0..2).forEach { idx ->
-//                val h = hail[idx]
-//                val t = ctx.mkBVConst("t$idx", 64)
-//                solver.add(ctx.mkEq(ctx.mkBVAdd(x, ctx.mkBVMul(vx, t)), ctx.mkBVAdd(ctx.mkBV(h.p.x.toLong(), 64), ctx.mkBVMul(ctx.mkBV(h.v.x.toLong(), 64), t))))
-//                solver.add(ctx.mkEq(ctx.mkBVAdd(y, ctx.mkBVMul(vy, t)), ctx.mkBVAdd(ctx.mkBV(h.p.y.toLong(), 64), ctx.mkBVMul(ctx.mkBV(h.v.y.toLong(), 64), t))))
-//                solver.add(ctx.mkEq(ctx.mkBVAdd(z, ctx.mkBVMul(vz, t)), ctx.mkBVAdd(ctx.mkBV(h.p.z.toLong(), 64), ctx.mkBVMul(ctx.mkBV(h.v.z.toLong(), 64), t))))
-//            }
-//            if (solver.check() == Status.SATISFIABLE) {  // check generates the model and confirms if it is satisfiable or not
-//                solver.model.eval(ctx.mkBVAdd(x, ctx.mkBVAdd(y, z) ), false).printAnswer()
-//            }
+        println("Took $time to process")
+    }
+
+    fun puzzle2v2() {
+        val hail = file.readLines().map {
+            it.split(" @ ").let {
+                Hail(it[0].split(", ").map { it.trim().toDouble() }.let { (x,y,z) -> Point3D(x,y,z) },
+                    it[1].split(", ").map { it.trim().toDouble() }.let { (x,y,z) -> Velocity3D(x,y,z) })
+            }
+        }
+        val ctx = Context() // if using proof = true, Real errors
+        val solver = ctx.mkSolver()
+
+        val time = measureTime {
+            val (x, y, z, vx, vy, vz) = listOf("x","y","z","vx","vy","vz").map { ctx.mkRealConst(it) }
+            (0..2).forEach {idx ->
+            val h = hail[idx]
+                val t = ctx.mkRealConst("t$idx")
+                solver.add(ctx.mkEq(ctx.mkAdd(x, ctx.mkMul(vx, t)), ctx.mkAdd(ctx.mkReal(h.p.x.toLong()), ctx.mkMul(ctx.mkReal(h.v.x.toLong()), t))))
+                solver.add(ctx.mkEq(ctx.mkAdd(y, ctx.mkMul(vy, t)), ctx.mkAdd(ctx.mkReal(h.p.y.toLong()), ctx.mkMul(ctx.mkReal(h.v.y.toLong()), t))))
+                solver.add(ctx.mkEq(ctx.mkAdd(z, ctx.mkMul(vz, t)), ctx.mkAdd(ctx.mkReal(h.p.z.toLong()), ctx.mkMul(ctx.mkReal(h.v.z.toLong()), t))))
+            }
+            if (solver.check() == Status.SATISFIABLE) {
+                solver.model.eval(ctx.mkAdd(x, ctx.mkAdd(y, z)), false).printAnswer()
+            }
         }
 
         println("Took $time to process")
