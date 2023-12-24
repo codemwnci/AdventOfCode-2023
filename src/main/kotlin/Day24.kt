@@ -96,7 +96,7 @@ class Day24 {
         val time = measureTime {
             val (x, y, z, vx, vy, vz) = listOf("x","y","z","vx","vy","vz").map { ctx.mkRealConst(it) }
             (0..2).forEach {idx ->
-            val h = hail[idx]
+                val h = hail[idx]
                 val t = ctx.mkRealConst("t$idx")
                 solver.add(ctx.mkEq(ctx.mkAdd(x, ctx.mkMul(vx, t)), ctx.mkAdd(ctx.mkReal(h.p.x.toLong()), ctx.mkMul(ctx.mkReal(h.v.x.toLong()), t))))
                 solver.add(ctx.mkEq(ctx.mkAdd(y, ctx.mkMul(vy, t)), ctx.mkAdd(ctx.mkReal(h.p.y.toLong()), ctx.mkMul(ctx.mkReal(h.v.y.toLong()), t))))
