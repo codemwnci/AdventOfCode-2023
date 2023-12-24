@@ -77,7 +77,7 @@ class Day24 {
             }
 
             //println(solver)                            // if we want to print out the z3 grammar to check our values
-            if (solver.check() == Status.SATISFIABLE) {  // check generates to model and confirms if it is satisfiable or not
+            if (solver.check() == Status.SATISFIABLE) {  // check generates the model and confirms if it is satisfiable or not
                 solver.model.eval(ctx.mkAdd(x, ctx.mkAdd(y, z)), false).printAnswer()
             }
 
@@ -91,7 +91,7 @@ class Day24 {
 //                solver.add(ctx.mkEq(ctx.mkBVAdd(y, ctx.mkBVMul(vy, t)), ctx.mkBVAdd(ctx.mkBV(h.p.y.toLong(), 64), ctx.mkBVMul(ctx.mkBV(h.v.y.toLong(), 64), t))))
 //                solver.add(ctx.mkEq(ctx.mkBVAdd(z, ctx.mkBVMul(vz, t)), ctx.mkBVAdd(ctx.mkBV(h.p.z.toLong(), 64), ctx.mkBVMul(ctx.mkBV(h.v.z.toLong(), 64), t))))
 //            }
-//            if (solver.check() == Status.SATISFIABLE) {  // check generates to model and confirms if it is satisfiable or not
+//            if (solver.check() == Status.SATISFIABLE) {  // check generates the model and confirms if it is satisfiable or not
 //                solver.model.eval(ctx.mkBVAdd(x, ctx.mkBVAdd(y, z) ), false).printAnswer()
 //            }
         }
