@@ -20,6 +20,7 @@ fun <T> List<T>.combinations(size: Int): List<List<T>> = when (size) {
     0 -> listOf(listOf())
     else -> flatMapIndexed { idx, element -> drop(idx + 1).combinations(size - 1).map { listOf(element) + it } }
 }
+operator fun <T> List<T>.component6(): T { return this[5] }
 
 fun Any.printAnswer() = println("Answer: ${this}")
 
