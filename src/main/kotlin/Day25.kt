@@ -12,7 +12,6 @@ class Day25 {
     private val file = File("inputs/day25.txt")
 
     fun puzzle1() {
-
         // tried desperately not to use a package to solve today's answer, but in the end gave up and went searching
         // for a decent graph library that implemented StoerWagner MinCut or Karger's algorithm
         // implemented using JGraphT (first Google hit searching "java mincut graph library")
@@ -29,7 +28,6 @@ class Day25 {
         val side2 = graph.vertexSet().size - side1
         (side1 * side2).printAnswer()
     }
-
 
     fun puzzle2() {
         "No Part 2. Merry Xmas".printAnswer()
